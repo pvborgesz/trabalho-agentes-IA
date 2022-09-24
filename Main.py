@@ -1,4 +1,5 @@
 import agents.AgenteSimples as AgenteSimples
+import agents.AgenteGenerico as AgenteGenerico
 
 
 class Main:
@@ -7,5 +8,5 @@ class Main:
     acoes = ["andar", "coletar", "retornar"]
     percepcoes = ["ver"]
     localizacao = [0,0]
-    agenteSimplesInstance = AgenteSimples.AgenteSimples(acoes=acoes, percepcoes=percepcoes, localizacao=localizacao)
+    agenteSimplesInstance = AgenteGenerico.AgenteGenerico(acoes=acoes, percepcoes=percepcoes, localizacao=localizacao)
     print("Testando POO", )
