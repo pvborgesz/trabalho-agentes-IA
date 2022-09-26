@@ -59,8 +59,7 @@ def geradorPontos():
     #         elif (secondItem == i):
     #             space[i] = [secondItem]
 
-    #         # space[firstItem][secondItem] = j[0][1]    
-    print(space)      
+    #         # space[firstItem][secondItem] = j[0][1]       
     return space
 
 # bem simples ainda, só um gerador de coordenada entre 0 e 20, vai precisar de alteração
