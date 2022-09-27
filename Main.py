@@ -6,7 +6,7 @@ from random import randint
 
 #Função auxiliar para imprimir o space no terminal. 
 def printSpace(space):
-    for i in positionPoints:
+    for i in space:
         print(i, "\n")
 
 #   ** Funcao de ação do agente para coletar e voltar para base
@@ -28,11 +28,16 @@ def collectPoint(positionPoint, space, collectedPoints, positionAgent):
 
 #Função que retorna a posição atual do agente no space e imprime no terminal o valor. 
 def currentPosition(space):
-    for i in len(space):
-        for j in len(space):
+    printSpace(space)
+    x = 0
+    y = 0
+    for i in range (len(space)):
+        for j in range (len(space)):
             if space[i][j] == 'agente':
                 print(f"Oi, sou o Agente e estou na posição X={i} Y={j}.")
-    return [x,y]
+                x = i
+                j = y
+    return [x,y] #retorna vetor com par da posicao do agente -> agente inicia na origem(0,0)
 
 #Função para movimentar o agente na matriz. 
 def move(space, nextPosition):
@@ -45,6 +50,7 @@ def move(space, nextPosition):
             agentPosition[x] = agentPosition[x-1]
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
+
     else :     #se o valor de Y for par, ele deve caminhar pra direita
         while (agentPosition[x] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x+1]
@@ -58,7 +64,9 @@ class Main:
     space = (pontosService.geradorPontos())
 
     #Definindo acoes do agente
-    acoesAgente = [collectPoint(positionPoint, space, collectedPoints, positionAgent), currentPosition(space), move(space, nextPosition), returnBase(space)]
-
+    acoesAgente = ['collectPoint', 'currentPosition', 'move', 'returnBase']
+    percepcoesAgente = []
+    localizacaoAgente = currentPosition(space)
+    print(localizacaoAgente)
     # instanciando agente simples 
-    agenteSimples = AgenteSimples(acoes=acoes, percepcoes=percepcoes, localizacao=localizacao)
+    # agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente)
