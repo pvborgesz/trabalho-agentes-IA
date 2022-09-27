@@ -1,21 +1,64 @@
-import agents.AgenteSimples as AgenteSimples
-import agents.AgenteGenerico as AgenteGenerico
-import utils.Pontos as geradorPontos
+from agents.AgenteSimples import AgenteSimples
+from agents.AgenteGenerico import AgenteGenerico
+import utils.Pontos as pontosService
 from random import randint
 # import numpy as np
 
-def printSpace(positionPoints):
+#Função auxiliar para imprimir o space no terminal. 
+def printSpace(space):
     for i in positionPoints:
-        print(i)
+        print(i, "\n")
 
+#   ** Funcao de ação do agente para coletar e voltar para base
+# * A ideia da função é pegar o valor onde está o ponto, verificar se ele é azul ou vermelho
+# * e a partir disso, incrementar a quantidade de pontos coletados, transformar a posicao coletada em
+# * 'vazio' e além disso, atualizar o space e retornar o Agente para base.
+def collectPoint(positionPoint, space, collectedPoints, positionAgent): 
+    positionX = positionPoint[0]
+    positionY = positionPoint[1]
+
+    if (space[positionX][positionY] == 'azul'): collectedPoints += 10
+    elif (space[positionX][positionY] == 'vermelho'): collectedPoints += 20
+
+    space[positionX][positionY] = 'vazio' #atualizando ponto coletado para vazio
+
+    positionAgent = [0,0] #agente retornando para base 
+    return space
+
+
+#Função que retorna a posição atual do agente no space e imprime no terminal o valor. 
+def currentPosition(space):
+    for i in len(space):
+        for j in len(space):
+            if space[i][j] == 'agente':
+                print(f"Oi, sou o Agente e estou na posição X={i} Y={j}.")
+    return [x,y]
+
+#Função para movimentar o agente na matriz. 
+def move(space, nextPosition):
+    agentPosition = currentPosition(space)
+    x = agentPosition[0]
+    y = agentPosition[1]
+
+    if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
+        while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
+            agentPosition[x] = agentPosition[x-1]
+        if (agentPosition[x] == 19): # se bater na borda, tem que descer 
+            agentPosition[y] = agentPosition[y+1]
+    else :     #se o valor de Y for par, ele deve caminhar pra direita
+        while (agentPosition[x] < 19): #enquanto não bater na borda da matriz
+            agentPosition[x] = agentPosition[x+1]
+        if (agentPosition[x] == 19): # se bater na borda, tem que descer 
+            agentPosition[y] = agentPosition[y+1]
+    
+    return space
 
 class Main:
-    # def __init__(self,val):    
-    teste = (geradorPontos.geradorPontos())
+    # criando ambiente -> gerando a matrix 20x20 e distribuindo os pontos vermelhos e azuis
+    space = (pontosService.geradorPontos())
 
-    acoes = ["andar", "coletar", "retornar"]
-    percepcoes = ["ver"]
-    localizacao = [0,0] 
-    
-    agenteSimplesInstance = AgenteGenerico.AgenteGenerico(acoes=acoes, percepcoes=percepcoes, localizacao=localizacao)
-    print(len(teste))
+    #Definindo acoes do agente
+    acoesAgente = [collectPoint(positionPoint, space, collectedPoints, positionAgent), currentPosition(space), move(space, nextPosition), returnBase(space)]
+
+    # instanciando agente simples 
+    agenteSimples = AgenteSimples(acoes=acoes, percepcoes=percepcoes, localizacao=localizacao)
