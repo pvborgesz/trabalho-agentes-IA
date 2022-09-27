@@ -17,3 +17,4 @@
 </ul>
 <br/>
 <p>A implementação do trabalho será feita em Python</p>
+<p>Para rodar o projeto, basta executar no terminal o comando "python Main.py"</p>

@@ -28,7 +28,7 @@ def collectPoint(positionPoint, space, collectedPoints, positionAgent):
 
 #Função que retorna a posição atual do agente no space e imprime no terminal o valor. 
 def currentPosition(space):
-    printSpace(space)
+    # printSpace(space)
     x = 0
     y = 0
     for i in range (len(space)):
