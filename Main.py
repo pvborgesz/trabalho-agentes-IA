@@ -50,6 +50,7 @@ def move(space, nextPosition):
             agentPosition[x] = agentPosition[x-1]
             if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
                 collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y]) #se encontrar ponto, deve coletar
+                space[x][y] = 'vazio'
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
             space[x][y] = 'vazio'
@@ -78,7 +79,7 @@ class Main:
     acoesAgente = ['collectPoint', 'currentPosition', 'move', 'returnBase']
     percepcoesAgente = []
     # instanciando agente simples 
-    agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente)
+    agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
 
     while (collectedPoints <= 300):
         move(space, [0,0])
