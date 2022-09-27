@@ -21,12 +21,14 @@ def geradorPontos():
 
         if (random_c, random_l) not in Pontos:
             # Pontos.append([random_c, random_l])
+
+            # --------- IMPORTANTE ------------------
             # Pegando um valor aleatorio pra fazer a proxima operacao, colocar 20 pontos, 10 azuis e 10 vermelhos
             # Ficou meio extenso o código, se der tempo a gente simplifica isso
             # Necessário testar 100%
             # Após testar, remover os prints
+            # ---------------------------------------
 
-            # space[random_c][random_l] = 'azul'
             random_value = sample(set([1, 2]), 1)  
 
             if (random_value[0] == 1 and qtdAzul< 10): 
@@ -46,21 +48,7 @@ def geradorPontos():
                 qtdVermelho += 1
                 # print("Coloquei mais um vermelho na posicao {} {}, no total tem {} vermelho".format(random_c,random_l,qtdVermelho))
                 
-        cont += 1 
-
-    # for i in range(len(space)):
-    #     # for j in range (len(space)):
-    #     for j in Pontos:
-    #         firstItem = j[0]
-    #         secondItem = j[1]
-    #         if (firstItem == i):
-    #             space[i][j] = [firstItem]
-    #             print("Valor atual de J", j, firstItem, secondItem)
-    #             print(space[i])
-    #         elif (secondItem == i):
-    #             space[i] = [secondItem]
-
-    #         # space[firstItem][secondItem] = j[0][1]       
+        cont += 1    
     return space
 
 # bem simples ainda, só um gerador de coordenada entre 0 e 20, vai precisar de alteração

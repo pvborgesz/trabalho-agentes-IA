@@ -44,23 +44,27 @@ def move(space, nextPosition):
     agentPosition = currentPosition(space)
     x = agentPosition[0]
     y = agentPosition[1]
-
+    
     if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
         while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x-1]
             if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
-                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y]) #se encontrar ponto, deve coletar
+                collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y]) #se encontrar ponto, deve coletar
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
+            space[x][y] = 'vazio'
+            space[agentPosition[x]][agentPosition[y]] = 'agente'
 
     else :     #se o valor de Y for par, ele deve caminhar pra direita
-        while (agentPosition[x] < 19): #enquanto não bater na borda da matriz
-            agentPosition[x] = agentPosition[x+1]
-            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
-                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y])
+        while (x < 19): #enquanto não bater na borda da matriz
+            # agentPosition[x] = agentPosition[x+1]
+            x =+ 1
+            if (space[x][y] == 'azul' or space[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
+                collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y])
+            
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
-    
+    print(space[agentPosition[x]][agentPosition[y]])
     return space
 
 class Main:
@@ -73,6 +77,8 @@ class Main:
     localizacaoAgente = currentPosition(space)
     acoesAgente = ['collectPoint', 'currentPosition', 'move', 'returnBase']
     percepcoesAgente = []
-    print(localizacaoAgente)
     # instanciando agente simples 
-    # agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente)
+    agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente)
+
+    while (collectedPoints <= 300):
+        move(space, [0,0])

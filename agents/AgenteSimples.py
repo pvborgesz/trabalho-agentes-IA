@@ -8,11 +8,11 @@ localizacao = []
 
 class AgenteSimples(AgenteGenerico):
     def __init__(self, acoes, percepcoes, localizacao):
-        super().__init__()
+        # super().__init__()
         self.acoes = acoes
         self. percepcoes = percepcoes
         self.localizacao = localizacao
-        print(self)
+        # print(self)
 
 # class AgenteSimples(AgenteGenerico):
 #     def __init__(self):
