@@ -49,14 +49,14 @@ def move(space, nextPosition):
         while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x-1]
             if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
-                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y])
+                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y]) #se encontrar ponto, deve coletar
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
 
     else :     #se o valor de Y for par, ele deve caminhar pra direita
         while (agentPosition[x] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x+1]
-            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
+            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
                 collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y])
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
