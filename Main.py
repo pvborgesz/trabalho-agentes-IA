@@ -48,25 +48,31 @@ def move(space, nextPosition):
     if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
         while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x-1]
+            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
+                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y])
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
 
     else :     #se o valor de Y for par, ele deve caminhar pra direita
         while (agentPosition[x] < 19): #enquanto não bater na borda da matriz
             agentPosition[x] = agentPosition[x+1]
+            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
+                collectPoint(agentPosition[x][y], space, collectedPoints, agentPosition[x][y])
         if (agentPosition[x] == 19): # se bater na borda, tem que descer 
             agentPosition[y] = agentPosition[y+1]
     
     return space
 
 class Main:
-    # criando ambiente -> gerando a matrix 20x20 e distribuindo os pontos vermelhos e azuis
-    space = (pontosService.geradorPontos())
+    #Variaveis globais
+    space = (pontosService.geradorPontos()) # criando ambiente -> gerando a matriz 20x20 e distribuindo os pontos vermelhos e azuis
+    global collectedPoints
+    collectedPoints = 0 #pontos que o agente já coletou, comeca de 0.
 
     #Definindo acoes do agente
+    localizacaoAgente = currentPosition(space)
     acoesAgente = ['collectPoint', 'currentPosition', 'move', 'returnBase']
     percepcoesAgente = []
-    localizacaoAgente = currentPosition(space)
     print(localizacaoAgente)
     # instanciando agente simples 
     # agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente)
