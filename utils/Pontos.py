@@ -10,7 +10,7 @@ def geradorPontos():
     qtdVermelho = 0
 
     for i in range(20):
-        space.append(['vazio'] * 20)
+        space.append(['_'] * 20)
 
   
     # print(len(space))

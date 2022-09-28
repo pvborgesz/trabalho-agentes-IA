@@ -6,24 +6,46 @@ from random import randint
 
 #Função auxiliar para imprimir o space no terminal. 
 def printSpace(space):
-    for i in space:
-        print(i, "\n")
+    for i in range (0,19):
+        for j in range (0,19):
+            print(f"[{space[i][j]}] ",end="")
+        if (j == 18): print("|\n")
+
+#Função para verificar elemento da position atual
+def verifySpace(pos, space):
+    if (space[pos[0]][pos[1]] == '_'):
+        return 'vazio'
+    elif (space[pos[0]][pos[1]] == 'vermelho'):
+        return 'vermelho'
+    elif (space[pos[0]][pos[1]] == 'azul'):
+        return 'azul'
+
+#Retonar agente para [0,0]
+def returnBase(pos, agente):
+    x = pos[0]
+    y = pos[1]
+    while(x != 0):
+        x -= 1
+    while(y != 0):
+        y -= 1     
+    agente.setPosition([x,y])
+    print(f"estou na posicao {x} {y}")
 
 #   ** Funcao de ação do agente para coletar e voltar para base
 # * A ideia da função é pegar o valor onde está o ponto, verificar se ele é azul ou vermelho
 # * e a partir disso, incrementar a quantidade de pontos coletados, transformar a posicao coletada em
 # * 'vazio' e além disso, atualizar o space e retornar o Agente para base.
-def collectPoint(positionPoint, space, collectedPoints, positionAgent): 
+def collectPoint(positionPoint, collectedPoints, pointColor, agente): 
     positionX = positionPoint[0]
     positionY = positionPoint[1]
 
-    if (space[positionX][positionY] == 'azul'): collectedPoints += 10
-    elif (space[positionX][positionY] == 'vermelho'): collectedPoints += 20
+    if (pointColor == 'azul'): collectedPoints += 10
+    elif (pointColor == 'vermelho'): collectedPoints += 20
 
-    space[positionX][positionY] = 'vazio' #atualizando ponto coletado para vazio
-
-    positionAgent = [0,0] #agente retornando para base 
-    return space
+    agente.setHasItem(True)
+    print(agente.getHasItem())
+    print("minha pontuacao atual é de: ",collectedPoints)
+    # positionAgent = [0,0] #agente retornando para base 
 
 
 #Função que retorna a posição atual do agente no space e imprime no terminal o valor. 
@@ -40,37 +62,73 @@ def currentPosition(space):
     return [x,y] #retorna vetor com par da posicao do agente -> agente inicia na origem(0,0)
 
 #Função para movimentar o agente na matriz. 
-def move(space, nextPosition):
-    agentPosition = currentPosition(space)
+def move(space, nextPosition, agente):
+    # agentPosition = currentPosition(space)
+    agentPosition = agente.getPosition()
+    # print("current ", agentPosition)
     x = agentPosition[0]
     y = agentPosition[1]
     
-    if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
-        while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
-            agentPosition[x] = agentPosition[x-1]
-            if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
-                collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y]) #se encontrar ponto, deve coletar
-                space[x][y] = 'vazio'
-        if (agentPosition[x] == 19): # se bater na borda, tem que descer 
-            agentPosition[y] = agentPosition[y+1]
-            space[x][y] = 'vazio'
-            space[agentPosition[x]][agentPosition[y]] = 'agente'
+    while (agente.getHasItem() == False):
+        for i in range(len(space)):
+            for j in range(len(space)):
+                if (space[x][y]== 'vermelho'):
+                    collectPoint([x,y], collectedPoints, 'vermelho', agente)
+                    print('acabei de coletar um vermelho')
+                    returnBase([x,y], agente)
+                    space[x][y] = 'vazio'
+                    move(space,[0,0], agente)
+                elif (space[x][y] == 'azul'):
+                    collectPoint([x,y], collectedPoints, 'azul', agente)
+                    print('acabei de coletar um azul')
+                    returnBase([x,y], agente)
+                    space[x][y] = 'vazio'
+                    move(space,[0,0], agente)
+                if (y % 2 == 0 and x < 19) : 
+                    # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
+                    x += 1
+                    # print(f"Agora Estou na posicao {x} {y} \n")
+                elif (y % 2 != 0 and x > 0):     
+                    # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
+                    x -= 1
+                    # print(f"Agora Estou na posicao {x} {y} \n")
+                if (x == 19 and 0<=y<19):
+                    y += 1
+                
+                
+                # printSpace(space)
+                agente.setPosition([x,y])
+                # space[x][y] = 'agente'
+        agente.setPosition([x,y])
+                
+    # if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
+    #     while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
+    #         agentPosition[x] = agentPosition[x-1]
+    #         print("o agente se moveu para a posicao")
+    #         if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
+    #             collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y]) #se encontrar ponto, deve coletar
+    #             space[x][y] = 'vazio'
+    #     if (agentPosition[x] == 19): # se bater na borda, tem que descer 
+    #         agentPosition[y] = agentPosition[y+1]
+    #         space[x][y] = 'vazio'
+    #         space[agentPosition[x]][agentPosition[y]] = 'agente'
 
-    else :     #se o valor de Y for par, ele deve caminhar pra direita
-        while (x < 19): #enquanto não bater na borda da matriz
-            # agentPosition[x] = agentPosition[x+1]
-            x =+ 1
-            if (space[x][y] == 'azul' or space[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
-                collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y])
+    # else :     #se o valor de Y for par, ele deve caminhar pra direita
+    #     while (x < 19): #enquanto não bater na borda da matriz
+    #         # agentPosition[x] = agentPosition[x+1]
+    #         x =+ 1
+    #         if (space[x][y] == 'azul' or space[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
+    #             collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y])
             
-        if (agentPosition[x] == 19): # se bater na borda, tem que descer 
-            agentPosition[y] = agentPosition[y+1]
-    print(space[agentPosition[x]][agentPosition[y]])
+    #     if (agentPosition[x] == 19): # se bater na borda, tem que descer 
+    #         agentPosition[y] = agentPosition[y+1]
+    # print(space[agentPosition[x]][agentPosition[y]])
     return space
 
 class Main:
     #Variaveis globais
     space = (pontosService.geradorPontos()) # criando ambiente -> gerando a matriz 20x20 e distribuindo os pontos vermelhos e azuis
+    printSpace(space)
     global collectedPoints
     collectedPoints = 0 #pontos que o agente já coletou, comeca de 0.
 
@@ -78,8 +136,11 @@ class Main:
     localizacaoAgente = currentPosition(space)
     acoesAgente = ['collectPoint', 'currentPosition', 'move', 'returnBase']
     percepcoesAgente = []
+
     # instanciando agente simples 
     agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
 
     while (collectedPoints <= 300):
-        move(space, [0,0])
+        move(space, [0,0], agenteSimples)
+
+    
