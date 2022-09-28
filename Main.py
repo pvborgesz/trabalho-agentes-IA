@@ -30,6 +30,7 @@ def returnBase(pos, agente):
         y -= 1     
     agente.setPosition([x,y])
     print(f"estou na posicao {x} {y}")
+    agente.setHasItem(False)
 
 #   ** Funcao de ação do agente para coletar e voltar para base
 # * A ideia da função é pegar o valor onde está o ponto, verificar se ele é azul ou vermelho
@@ -39,12 +40,11 @@ def collectPoint(positionPoint, collectedPoints, pointColor, agente):
     positionX = positionPoint[0]
     positionY = positionPoint[1]
 
-    if (pointColor == 'azul'): collectedPoints += 10
-    elif (pointColor == 'vermelho'): collectedPoints += 20
+    if (pointColor == 'azul'): agente.setCollectedPoints(agente.getCollectedPoints() + 10)
+    elif (pointColor == 'vermelho'): agente.setCollectedPoints(agente.getCollectedPoints() + 20)
 
     agente.setHasItem(True)
-    print(agente.getHasItem())
-    print("minha pontuacao atual é de: ",collectedPoints)
+    print("minha pontuacao atual é de: ", agente.getCollectedPoints())
     # positionAgent = [0,0] #agente retornando para base 
 
 
@@ -69,7 +69,8 @@ def move(space, nextPosition, agente):
     x = agentPosition[0]
     y = agentPosition[1]
     
-    while (agente.getHasItem() == False):
+    print(agente.getHasItem(), "ta como item?")
+    while (agente.getHasItem() == False and agente.getCollectedPoints() < 300):
         for i in range(len(space)):
             for j in range(len(space)):
                 if (space[x][y]== 'vermelho'):
@@ -87,15 +88,17 @@ def move(space, nextPosition, agente):
                 if (y % 2 == 0 and x < 19) : 
                     # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
                     x += 1
+                    # print('andei p direita')
                     # print(f"Agora Estou na posicao {x} {y} \n")
                 elif (y % 2 != 0 and x > 0):     
                     # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
                     x -= 1
+                    # print('andei p esquerda')
                     # print(f"Agora Estou na posicao {x} {y} \n")
-                if (x == 19 and 0<=y<19):
+                if (x == 19 or x == 0 and 0<=y<19):
                     y += 1
-                
-                
+                    # print("andei p baixo")
+
                 # printSpace(space)
                 agente.setPosition([x,y])
                 # space[x][y] = 'agente'
@@ -140,7 +143,12 @@ class Main:
     # instanciando agente simples 
     agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
 
-    while (collectedPoints <= 300):
+    while (agenteSimples.getCollectedPoints() < 300):
         move(space, [0,0], agenteSimples)
+        # printSpace(space)
 
+    for i in range(19):
+        for j in range(19):
+            if (space[i][j] != 'vermelho' or space[i][j] != 'azul'):
+                printSpace(space)
     

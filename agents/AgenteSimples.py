@@ -36,7 +36,7 @@ class AgenteSimples(AgenteGenerico):
     def getPosition(self):
         return [self.posX, self.posY]
 
-    def setPosition(self, pos,):
+    def setPosition(self, pos):
         self.posX = pos[0]
         self.posy = pos[1]
 
@@ -45,3 +45,9 @@ class AgenteSimples(AgenteGenerico):
     
     def setHasItem(self, hasItem):
         self.hasItem = hasItem   
+
+    def getCollectedPoints(self):
+        return self.collectedPoints
+
+    def setCollectedPoints(self, collectedPoints):
+        self.collectedPoints = collectedPoints      
