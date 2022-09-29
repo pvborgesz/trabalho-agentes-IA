@@ -4,12 +4,6 @@ from random import sample
 
 # print(bcolors.FAIL + "Unable to delete record." + bcolors.RESET)
 
-class bcolors:
-    OK = '\033[92m' #GREEN
-    WARNING = '\033[93m' #YELLOW
-    FAIL = '\033[91m' #RED
-    RESET = '\033[0m' #RESET COLOR
-
 def geradorPontos():
     Pontos = []
     cont = 0
@@ -23,7 +17,7 @@ def geradorPontos():
   
     # print(len(space))
     space[0][0] = 'agente'
-    while cont < 20:
+    while cont < 10:
         random_c = randint(0, 19) 
         random_l = randint(0, 19) 
 

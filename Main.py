@@ -28,9 +28,9 @@ def printSpace(space):
     for i in range (0,19):
         for j in range (0,19):
             if (space[i][j] == 'vermelho'): 
-                print( "\033[1;31m"  + f"[{space[i][j]}] " , end="" + bcolors.RESET)
+                print( "\033[1;31m"  + f"[{space[i][j]}]" , end="" + bcolors.RESET)
             elif (space[i][j] == 'azul'): 
-                print("\033[1;34m"+ f"[{space[i][j]}] " , end="" + bcolors.RESET)
+                print("\033[1;34m"+ f"[{space[i][j]}]" , end="" + bcolors.RESET)
             else:
                 print(f"[{space[i][j]}] ",end="")
         if (j == 18): print("|\n")
@@ -114,7 +114,7 @@ def move(space, nextPosition, agente):
                 flag = hasPoints(space)
                 if (space[x][y]== 'vermelho' and not agente.getHasItem()):
                     flagCollected = collectPoint([x,y], collectedPoints, 'vermelho', agente)
-                    print('acabei de coletar um vermelho')
+                    # print('acabei de coletar um vermelho')
                     if (flagCollected): 
                         space[x][y] = 'vazio'
                         print("coletei e deixei vazio")
@@ -123,7 +123,7 @@ def move(space, nextPosition, agente):
                     # space[x][y] = 'vazio'
                 elif (space[x][y] == 'azul' and not agente.getHasItem()):
                     flagCollected = collectPoint([x,y], collectedPoints, 'azul', agente)
-                    print('acabei de coletar um azul')
+                    # print('acabei de coletar um azul')
                     returnBase(agente)
                     if (flagCollected): space[x][y] = 'vazio'
                 if (y % 2 == 0 and x < 19) : 
