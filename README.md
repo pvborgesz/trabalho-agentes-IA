@@ -18,3 +18,8 @@
 <br/>
 <p>A implementação do trabalho será feita em Python</p>
 <p>Para rodar o projeto, basta executar no terminal o comando "python Main.py"</p>
+
+<p>
+5 - pontos valendo 10 
+5 - pontos valendo 20 
+</p>
