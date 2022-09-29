@@ -2,7 +2,14 @@ from agents.AgenteSimples import AgenteSimples
 from agents.AgenteGenerico import AgenteGenerico
 import utils.Pontos as pontosService
 from random import randint
+
 # import numpy as np
+class bcolors:
+    OK = '\033[92m' #GREEN
+    WARNING = '\033[93m' #YELLOW
+    FAIL = '\033[91m' #RED
+    RESET = '\033[0m' #RESET COLOR
+
 
 # Funcao para verificar se ainda existe algum ponto a ser coletado
 def hasPoints(space):
@@ -20,7 +27,12 @@ def hasPoints(space):
 def printSpace(space):
     for i in range (0,19):
         for j in range (0,19):
-            print(f"[{space[i][j]}] ",end="")
+            if (space[i][j] == 'vermelho'): 
+                print( "\033[1;31m"  + f"[{space[i][j]}] " , end="" + bcolors.RESET)
+            elif (space[i][j] == 'azul'): 
+                print("\033[1;34m"+ f"[{space[i][j]}] " , end="" + bcolors.RESET)
+            else:
+                print(f"[{space[i][j]}] ",end="")
         if (j == 18): print("|\n")
 
     print('\n\n\n')

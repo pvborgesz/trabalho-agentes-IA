@@ -2,6 +2,14 @@ from random import randint
 from random import sample
 # import numpy as np
 
+# print(bcolors.FAIL + "Unable to delete record." + bcolors.RESET)
+
+class bcolors:
+    OK = '\033[92m' #GREEN
+    WARNING = '\033[93m' #YELLOW
+    FAIL = '\033[91m' #RED
+    RESET = '\033[0m' #RESET COLOR
+
 def geradorPontos():
     Pontos = []
     cont = 0
