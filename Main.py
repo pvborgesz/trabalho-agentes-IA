@@ -96,7 +96,7 @@ def move(space, nextPosition, agente):
     y = agentPosition[1]
     
     print(agente.getHasItem(), "ta como item?")
-    while (agente.getHasItem() == False and agente.getCollectedPoints() < 300):
+    while (agente.getHasItem() == False and agente.getCollectedPoints() < 150):
         for i in range(len(space)):
             for j in range(len(space)):
                 flag = hasPoints(space)

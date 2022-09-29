@@ -31,19 +31,19 @@ def geradorPontos():
 
             random_value = sample(set([1, 2]), 1)  
 
-            if (random_value[0] == 1 and qtdAzul< 10): 
+            if (random_value[0] == 1 and qtdAzul< 5): 
                 random_value = space[random_c][random_l] = 'azul'
                 qtdAzul += 1  
                 # print("Coloquei mais um azul na posicao {} {}, no total tem {} azul".format(random_c,random_l,qtdAzul))
-            elif (random_value[0] == 2 and qtdVermelho < 10):  
+            elif (random_value[0] == 2 and qtdVermelho <= 5):  
                 space[random_c][random_l] = 'vermelho' 
                 qtdVermelho += 1
                 # print("Coloquei mais um vermelho na posicao {} {}, no total tem {} vermelho".format(random_c,random_l,qtdVermelho))
-            elif (random_value[0] == 1 and qtdAzul == 10):
+            elif (random_value[0] == 1 and qtdAzul < 5):
                 space[random_c][random_l] = 'vermelho' 
                 qtdVermelho += 1
                 # print("Coloquei mais um vermelho na posicao {} {}, no total tem {} vermelho".format(random_c,random_l,qtdVermelho))
-            elif (random_value[0] == 1 and qtdVermelho == 10):   
+            elif (random_value[0] == 1 and qtdVermelho <= 5):   
                 space[random_c][random_l] = 'vermelho' 
                 qtdVermelho += 1
                 # print("Coloquei mais um vermelho na posicao {} {}, no total tem {} vermelho".format(random_c,random_l,qtdVermelho))
