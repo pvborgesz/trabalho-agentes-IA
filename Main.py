@@ -21,13 +21,15 @@ def verifySpace(pos, space):
         return 'azul'
 
 #Retonar agente para [0,0]
-def returnBase(pos, agente):
+def returnBase(agente):
+    pos = agente.getPosition()
     x = pos[0]
     y = pos[1]
+    while(y != 0):
+        y -= 1 
+        print("andei p esquerda voltando p base")    
     while(x != 0):
         x -= 1
-    while(y != 0):
-        y -= 1     
     agente.setPosition([x,y])
     print(f"estou na posicao {x} {y}")
     agente.setHasItem(False)
@@ -39,11 +41,18 @@ def returnBase(pos, agente):
 def collectPoint(positionPoint, collectedPoints, pointColor, agente): 
     positionX = positionPoint[0]
     positionY = positionPoint[1]
-
-    if (pointColor == 'azul'): agente.setCollectedPoints(agente.getCollectedPoints() + 10)
-    elif (pointColor == 'vermelho'): agente.setCollectedPoints(agente.getCollectedPoints() + 20)
-
-    agente.setHasItem(True)
+    if (agente.getHasItem() == False) :
+        if (pointColor == 'azul'): 
+            agente.setCollectedPoints(agente.getCollectedPoints() + 10)
+            agente.setHasItem(True)
+            returnBase(agente)
+        elif (pointColor == 'vermelho'): 
+            agente.setCollectedPoints(agente.getCollectedPoints() + 20)
+            agente.setHasItem(True)
+            returnBase(agente)
+    else:
+        returnBase(agente)
+    
     print("minha pontuacao atual é de: ", agente.getCollectedPoints())
     # positionAgent = [0,0] #agente retornando para base 
 
@@ -76,28 +85,29 @@ def move(space, nextPosition, agente):
                 if (space[x][y]== 'vermelho'):
                     collectPoint([x,y], collectedPoints, 'vermelho', agente)
                     print('acabei de coletar um vermelho')
-                    returnBase([x,y], agente)
+                    agente.setPosition([x,y])
+                    returnBase(agente)
                     space[x][y] = 'vazio'
                     move(space,[0,0], agente)
                 elif (space[x][y] == 'azul'):
                     collectPoint([x,y], collectedPoints, 'azul', agente)
                     print('acabei de coletar um azul')
-                    returnBase([x,y], agente)
+                    returnBase(agente)
                     space[x][y] = 'vazio'
                     move(space,[0,0], agente)
                 if (y % 2 == 0 and x < 19) : 
-                    # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
+                    print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
                     x += 1
-                    # print('andei p direita')
-                    # print(f"Agora Estou na posicao {x} {y} \n")
+                    print('andei p direita')
+                    print(f"Agora Estou na posicao {x} {y} \n")
                 elif (y % 2 != 0 and x > 0):     
-                    # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
+                    print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
                     x -= 1
-                    # print('andei p esquerda')
-                    # print(f"Agora Estou na posicao {x} {y} \n")
+                    print('andei p esquerda')
+                    print(f"Agora Estou na posicao {x} {y} \n")
                 if (x == 19 or x == 0 and 0<=y<19):
                     y += 1
-                    # print("andei p baixo")
+                    print("andei p baixo")
 
                 # printSpace(space)
                 agente.setPosition([x,y])
