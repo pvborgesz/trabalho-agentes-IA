@@ -1,7 +1,10 @@
 from agents.AgenteSimples import AgenteSimples
 from agents.AgenteGenerico import AgenteGenerico
+from agents.AgenteCModelos import AgenteCModelos
 import utils.Pontos as pontosService
 from random import randint
+import time
+start_time = time.time()
 
 # import numpy as np
 class bcolors:
@@ -9,6 +12,14 @@ class bcolors:
     WARNING = '\033[93m' #YELLOW
     FAIL = '\033[91m' #RED
     RESET = '\033[0m' #RESET COLOR
+
+
+def moveCModelo(space, agente):
+    lastPosition = [agente.getPosition()] 
+    x = lastPosition[0]
+    y = lastPosition[1]
+
+    move(space, [0,0], agente) 
 
 
 # Funcao para verificar se ainda existe algum ponto a ser coletado
@@ -199,9 +210,13 @@ class Main:
 
     # instanciando agente simples 
     agenteSimples = AgenteSimples(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
+    agenteCModelos = AgenteCModelos(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
+
+    agenteCModelos.setMapa(space)
 
     # while (agenteSimples.getCollectedPoints() < 300):
-    move(space, [0,0], agenteSimples)
+    # move(space, [0,0], agenteSimples) # agente simples
+    print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
         # printSpace(space)
 
     # for i in range(19):
