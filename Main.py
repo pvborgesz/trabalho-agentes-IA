@@ -152,7 +152,7 @@ def move(space, nextPosition, agente):
                     if (flagCollected): space[x][y] = 'vazio'
                 if (y % 2 == 0 and x < 19) : 
                     # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
-                    x += 1
+                    x += 1 
                     # print('andei p direita')
                     # print(f"Agora Estou na posicao {x} {y} \n")
                     if (flag):                    
