@@ -15,12 +15,23 @@ class bcolors:
 
 
 def moveCModelo(space, agente):
-    lastPosition = [agente.getPosition()] 
-    x = lastPosition[0]
-    y = lastPosition[1]
+    try:
+        lastPosition = agente.getLastPosition()
+        print(lastPosition)
+        x = lastPosition[0]
+        y = lastPosition[1]
 
-    move(space, [0,0], agente) 
+        for i in range (len(space)):
+            for j in range (len(space)):
+                while (j != y and y != 0): #chegar na ultima posicao
+                    j += 1
+                while (i != x and x != 0):
+                    x += 1 
+        agente.setPosition([i,j])              
+        move(space, [0,0], agente) 
 
+    except Exception as e:
+        print(e, "-> moveCmodelo")
 
 # Funcao para verificar se ainda existe algum ponto a ser coletado
 def hasPoints(space):
@@ -92,6 +103,8 @@ def collectPoint(positionPoint, collectedPoints, pointColor, agente):
             return True
     
     printSpace(space)
+    if (isinstance(agenteCModelos, AgenteCModelos)):
+        agente.setLastPosition(x,y)
     print("minha pontuacao atual é de: ", agente.getCollectedPoints())
 
     # positionAgent = [0,0] #agente retornando para base 
@@ -171,29 +184,6 @@ def move(space, nextPosition, agente):
                 agente.setPosition([x,y])
                 # space[x][y] = 'agente'
         agente.setPosition([x,y])
-                
-    # if (agentPosition[y] % 2 != 0): #se o valor de Y for impar, ele deve caminhar pra esquerda
-    #     while (agentPosition[x][y] < 19): #enquanto não bater na borda da matriz
-    #         agentPosition[x] = agentPosition[x-1]
-    #         print("o agente se moveu para a posicao")
-    #         if (agentPosition[x][y] == 'azul' or agentPosition[x][y] == 'vermelho'):
-    #             collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y]) #se encontrar ponto, deve coletar
-    #             space[x][y] = 'vazio'
-    #     if (agentPosition[x] == 19): # se bater na borda, tem que descer 
-    #         agentPosition[y] = agentPosition[y+1]
-    #         space[x][y] = 'vazio'
-    #         space[agentPosition[x]][agentPosition[y]] = 'agente'
-
-    # else :     #se o valor de Y for par, ele deve caminhar pra direita
-    #     while (x < 19): #enquanto não bater na borda da matriz
-    #         # agentPosition[x] = agentPosition[x+1]
-    #         x =+ 1
-    #         if (space[x][y] == 'azul' or space[x][y] == 'vermelho'): #se encontrar ponto, deve coletar
-    #             collectPoint(agentPosition[x][y], space, collectedPoints, space[x][y])
-            
-    #     if (agentPosition[x] == 19): # se bater na borda, tem que descer 
-    #         agentPosition[y] = agentPosition[y+1]
-    # print(space[agentPosition[x]][agentPosition[y]])
     return space
 
 class Main:
@@ -214,8 +204,11 @@ class Main:
 
     agenteCModelos.setMapa(space)
 
-    # while (agenteSimples.getCollectedPoints() < 300):
     # move(space, [0,0], agenteSimples) # agente simples
+    # print(agenteSimples.getCollectedPoints())
+    moveCModelo(space, agenteCModelos) # agente simples
+    # print((type(agenteCModelos)))
+    # print(isinstance(agenteCModelos, AgenteCModelos))
     print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
         # printSpace(space)
 

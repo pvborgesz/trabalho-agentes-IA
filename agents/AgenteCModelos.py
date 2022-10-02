@@ -17,6 +17,7 @@ class AgenteCModelos(AgenteGenerico):
         self.posY = localizacao[1]
         self.hasItem = False
         self.mapa = []
+        self.lastPosition = []
 
      #Define o movimento de subir
     def cima(self):
@@ -51,8 +52,16 @@ class AgenteCModelos(AgenteGenerico):
         return self.collectedPoints
 
     def setCollectedPoints(self, collectedPoints):
-        self.collectedPoints = collectedPoints      
+        self.collectedPoints = collectedPoints   
+
     def setMapa(self, mapa):
         self.mapa = mapa
     def getMapa(self):
         return self.mapa    
+    
+    def getLastPosition(self):
+        return [self.posX, self.posY]
+
+    def setLastPosition(self, pos):
+        self.posX = pos[0]
+        self.posy = pos[1]
