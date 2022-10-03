@@ -39,7 +39,10 @@ def hasPoints(space):
     for i in range(len(space)):
         for j in range(len(space)):
             if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
+                # print("ainda tem ponto")
                 flagHasPoints = True
+                return flagHasPoints
+                
  
     # if (not flagHasPoints):
         # print("não temos mais itens a ser coletados. parece que o trabalho foi concluido. ")
@@ -132,7 +135,7 @@ def move(space, nextPosition, agente):
     y = agentPosition[1]
     
     print(agente.getHasItem(), "ta como item?")
-    while (agente.getHasItem() == False and agente.getCollectedPoints() < 150):
+    while (agente.getHasItem() == False and agente.getCollectedPoints() < 150 and hasPoints(space)):
         for i in range(len(space)):
             for j in range(len(space)):
                 flag = hasPoints(space)
