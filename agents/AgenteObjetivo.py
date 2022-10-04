@@ -1,5 +1,4 @@
 from agents.AgenteGenerico import AgenteGenerico
-
 acoes = []
 percepcoes = []
 localizacao = []
@@ -75,15 +74,12 @@ class AgenteObjetivo(AgenteGenerico):
                     posicaoPontos.append([i,j])
                     # posicaoPontos.append([i,j, space[i][j]])
 
-        aux = 0 
-        maiorVetor = []
-        for i in posicaoPontos:
-            if (i[1] > aux):
-                maiorVetor.append(i)
-                aux = i[1]
+        aux = 0
+        
+        print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
 
-        # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
-        return maiorVetor           
+        print(posicaoPontos)
+        return posicaoPontos           
 
     def gotoPoint(self, posPoints, space, agente):
         currentPosition = agente.getPosition()
