@@ -3,7 +3,7 @@ acoes = []
 percepcoes = []
 localizacao = []
 
-import numpy as np
+# from numpy import numpy as np
 
 # AgenteGenerico = AgenteGenerico.AgenteGenerico(acoes, percepcoes, localizacao)
 
@@ -77,12 +77,8 @@ class AgenteUtilidade(AgenteGenerico):
                     posicaoPontos.append([i,j, space[i][j]])
 
         print(posicaoPontos)
-        a = np.array(posicaoPontos)
-        a.sort(axis=1)
-        print(a)
-
         # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
-        return a         
+        return posicaoPontos        
 
     def gotoPoint(self, posPoints, space, agente):
         currentPosition = agente.getPosition()
@@ -112,7 +108,7 @@ class AgenteUtilidade(AgenteGenerico):
         x = positionPoint[0]
         y = positionPoint[1]
         if (agente.getHasItem() == False) :
-            if (pointColor == 'B '): 
+            if (pointColor == 'R '): 
                 space[x][y] = '0'
                 agente.setCollectedPoints(agente.getCollectedPoints() + 10)
                 agente.setHasItem(True)
@@ -120,7 +116,7 @@ class AgenteUtilidade(AgenteGenerico):
                 returnBase(agente)
                 print("minha pontuacao atual é de: ", agente.getCollectedPoints())
                 return True
-            elif (pointColor == 'R '): 
+            elif (pointColor == 'B '): 
                 space[x][y] = '0'
                 agente.setCollectedPoints(agente.getCollectedPoints() + 20)
                 agente.setHasItem(True)
