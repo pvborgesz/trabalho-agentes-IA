@@ -74,7 +74,7 @@ class AgenteObjetivo(AgenteGenerico):
                     # posicaoPontos.append([i,j])
                     posicaoPontos.append([i,j, space[i][j]])
 
-        print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
+        # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
         return posicaoPontos           
 
     def gotoPoint(self, posPoints, space, agente):
