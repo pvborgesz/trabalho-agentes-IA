@@ -2,6 +2,7 @@ from agents.AgenteSimples import AgenteSimples
 from agents.AgenteGenerico import AgenteGenerico
 from agents.AgenteCModelos import AgenteCModelos
 from agents.AgenteObjetivo import AgenteObjetivo
+from agents.AgenteUtilidade import AgenteUtilidade
 import utils.Pontos as pontosService
 from random import randint
 import time
@@ -229,5 +230,8 @@ class Main:
     agenteObjetivo = AgenteObjetivo(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
     pontosMapeados = agenteObjetivo.mapearSpace(space)
     agenteObjetivo.gotoPoint(pontosMapeados,space, agenteObjetivo)
-    move(space, [0,0], agenteObjetivo)  #agente com modelo
+    # move(space, [0,0], agenteObjetivo)  #agente com modelo
+    agenteUtilidade = AgenteUtilidade(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
+    pontosMapeados = agenteUtilidade.mapearSpace(space)
+    move(space, [0,0], agenteUtilidade)  #agente com modelo
     print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))

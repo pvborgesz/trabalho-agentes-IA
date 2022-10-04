@@ -5,7 +5,7 @@ localizacao = []
 
 # AgenteGenerico = AgenteGenerico.AgenteGenerico(acoes, percepcoes, localizacao)
 
-class AgenteObjetivo(AgenteGenerico):
+class AgenteUtilidade(AgenteGenerico):
     def __init__(self, acoes, percepcoes, localizacao,collectedPoints):
         # super().__init__()
         self.acoes = acoes
@@ -74,7 +74,7 @@ class AgenteObjetivo(AgenteGenerico):
                     # posicaoPontos.append([i,j])
                     posicaoPontos.append([i,j, space[i][j]])
 
-        print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
+        # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
         return posicaoPontos           
 
     def gotoPoint(self, posPoints, space, agente):
@@ -84,22 +84,46 @@ class AgenteObjetivo(AgenteGenerico):
         y = currentPosition[1]
 
         for i in range(len(posPoints)):
-            if posPoints[2] == 'vermelho':
-                while (x != posPoints[0][0]):
-                    x += 1
-                    print('andei p direita')
-                while (y != posPoints[0][1]):
-                    y += 1
-                    print('andei p baixo')
-            else:
-                while (x != posPoints[0][0]):
-                    x += 1
-                    print('andei p direita')
-                while (y != posPoints[0][1]):
-                    y += 1
-                    print('andei p baixo')
+            while (x != posPoints[0][0]):
+                x += 1
+                # print('andei p direita')
+                if (space[x][y] == 'vermelho' or space[x][y] == 'azul '):
+                    collectPoint([x,y], space[x][y], agente,space)
+            while (y != posPoints[0][1]):
+                y += 1
+                # print('andei p baixo')
+                if (space[x][y] == 'vermelho' or space[x][y] == 'azul '):
+                    collectPoint([x,y], space[x][y], agente,space)
+
         posPoints.pop(0)       
 
         agente.setPosition([x,y])
         
         return;
+
+    def collectPoint(positionPoint, pointColor, agente,space): 
+        x = positionPoint[0]
+        y = positionPoint[1]
+        if (agente.getHasItem() == False) :
+            if (pointColor == 'azul'): 
+                space[x][y] = 'vazio'
+                agente.setCollectedPoints(agente.getCollectedPoints() + 10)
+                agente.setHasItem(True)
+                printSpace(space)
+                returnBase(agente)
+                print("minha pontuacao atual é de: ", agente.getCollectedPoints())
+                return True
+            elif (pointColor == 'vermelho'): 
+                space[x][y] = 'vazio'
+                agente.setCollectedPoints(agente.getCollectedPoints() + 20)
+                agente.setHasItem(True)
+                printSpace(space)
+                returnBase(agente)
+                print("minha pontuacao atual é de: ", agente.getCollectedPoints())
+                return True
+        
+        # printSpace(space)
+        if (isinstance(agenteCModelos, AgenteCModelos)):
+            agente.setLastPosition(x,y)
+            print ("oi, sou o agente e coletei em ", agente.getLastPosition())
+        print("minha pontuacao atual é de: ", agente.getCollectedPoints())
