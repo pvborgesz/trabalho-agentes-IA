@@ -17,7 +17,7 @@ class bcolors:
 def moveCModelo(space, agente):
     # try:
         lastPosition = agente.getLastPosition()
-        print(lastPosition)
+        # print(lastPosition)
         x = lastPosition[0]
         y = lastPosition[1]
 
@@ -42,7 +42,7 @@ def hasPoints(space):
 
             if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
                 flagHasPoints = True
-                print(i,j, space[i][j])
+                # print(i,j, space[i][j])
                 break
     return flagHasPoints
                 
