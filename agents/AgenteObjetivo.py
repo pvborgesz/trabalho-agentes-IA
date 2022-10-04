@@ -6,7 +6,7 @@ localizacao = []
 
 # AgenteGenerico = AgenteGenerico.AgenteGenerico(acoes, percepcoes, localizacao)
 
-class AgenteCModelos(AgenteGenerico):
+class AgenteObjetivo(AgenteGenerico):
     def __init__(self, acoes, percepcoes, localizacao,collectedPoints):
         # super().__init__()
         self.acoes = acoes
@@ -65,3 +65,43 @@ class AgenteCModelos(AgenteGenerico):
     def setLastPosition(self, pos):
         self.posX = pos[0]
         self.posy = pos[1]
+
+
+    def mapearSpace(self,space):
+        posicaoPontos = []
+        for i in range (len(space)):
+            for j in range (len(space)):
+                if (space[i][j] == 'azul' or space[i][j] == 'vermelho'):
+                    posicaoPontos.append([i,j])
+                    # posicaoPontos.append([i,j, space[i][j]])
+
+        aux = 0 
+        maiorVetor = []
+        for i in posicaoPontos:
+            if (i[1] > aux):
+                maiorVetor.append(i)
+                aux = i[1]
+
+        # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
+        return maiorVetor           
+
+    def gotoPoint(self, posPoints, space, agente):
+        currentPosition = agente.getPosition()
+
+        x = currentPosition[0]
+        y = currentPosition[1]
+        # print(posPoints)
+        posPoints.sort()
+
+        for i in range(len(posPoints)):
+            while (x != posPoints[0][0]):
+                x += 1
+                print('andei p direita')
+            while (y != posPoints[0][1]):
+                y += 1
+                print('andei p baixo')
+        posPoints.pop(0)       
+
+        agente.setPosition([x,y])
+        
+        return;

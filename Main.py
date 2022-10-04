@@ -1,6 +1,7 @@
 from agents.AgenteSimples import AgenteSimples
 from agents.AgenteGenerico import AgenteGenerico
 from agents.AgenteCModelos import AgenteCModelos
+from agents.AgenteObjetivo import AgenteObjetivo
 import utils.Pontos as pontosService
 from random import randint
 import time
@@ -216,18 +217,17 @@ class Main:
 
     agenteCModelos.setMapa(space)
 
-
-    moveCModelo(space, agenteCModelos) 
     # move(space, [0,0], agenteSimples) # agente simples
-    # print(agenteSimples.getCollectedPoints())
-   
-    # print((type(agenteCModelos)))
-    # print(isinstance(agenteCModelos, AgenteCModelos))
-    print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
+ 
+    # atual = time.time() - start_time
+    # print("--- Tempo de execucao de: %s segundos ---" % (atual))
+    # moveCModelo(space, agenteCModelos)  #agente com modelo   
+    # atual1 = time.time() - start_time   
+    # print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
         # printSpace(space)
 
-    # for i in range(19):
-    #     for j in range(19):
-    #         if (space[i][j] != 'vermelho' or space[i][j] != 'azul'):
-    #             printSpace(space)
-    
+    agenteObjetivo = AgenteObjetivo(acoes=acoesAgente, percepcoes=percepcoesAgente , localizacao=localizacaoAgente, collectedPoints=collectedPoints)
+    pontosMapeados = agenteObjetivo.mapearSpace(space)
+    agenteObjetivo.gotoPoint(pontosMapeados,space, agenteObjetivo)
+    move(space, [0,0], agenteObjetivo)  #agente com modelo
+    print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
