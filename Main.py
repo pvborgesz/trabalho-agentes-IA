@@ -27,7 +27,8 @@ def moveCModelo(space, agente):
                     j += 1
                 while (i != x and x != 0):
                     x += 1 
-        agente.setPosition([i,j])              
+        agente.setPosition([i,j]) 
+        print('coemcando move dnv', agente.getPosition())           
         move(space, [0,0], agente) 
 
     # except Exception as e:
@@ -38,11 +39,12 @@ def hasPoints(space):
     flagHasPoints = False
     for i in range(len(space)):
         for j in range(len(space)):
-            if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
 
+            if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
                 flagHasPoints = True
                 print(i,j, space[i][j])
-                return flagHasPoints
+                break
+    return flagHasPoints
                 
                 
     # print(space)
@@ -138,13 +140,12 @@ def currentPosition(space):
 def move(space, nextPosition, agente):
     # agentPosition = currentPosition(space)
     agentPosition = agente.getPosition()
-    print(agentPosition, "pos")
-    if (agentPosition[0] == 0 and agentPosition[1] == 19): returnBase(agente)
+
+    if (agentPosition[0] == 19 and agentPosition[1] == 19): returnBase(agente)
     x = agentPosition[0]
     y = agentPosition[1]
-    print(agentPosition, "comecei na pos ")
-    print(agente.getHasItem(), "ta como item?")
-    while (hasPoints(space) and agente.collectedPoints < 150):
+
+    while (hasPoints(space)==True and agente.collectedPoints < 150):
         for i in range(len(space)):
             for j in range(len(space)):
                 flag = hasPoints(space)

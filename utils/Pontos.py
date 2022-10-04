@@ -19,8 +19,8 @@ def geradorPontos():
     # space[0][0] = 'agente'
     # while cont < 10 and qtdAzul< 5 and qtdVermelho<5:
     while qtdAzul< 5 or qtdVermelho<5:
-        random_c = randint(0, 19) 
-        random_l = randint(0, 19) 
+        random_c = randint(1, 18) 
+        random_l = randint(1, 18) 
 
         if (random_c, random_l) not in Pontos:
             # Pontos.append([random_c, random_l])
