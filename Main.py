@@ -15,7 +15,7 @@ class bcolors:
 
 
 def moveCModelo(space, agente):
-    try:
+    # try:
         lastPosition = agente.getLastPosition()
         print(lastPosition)
         x = lastPosition[0]
@@ -30,8 +30,8 @@ def moveCModelo(space, agente):
         agente.setPosition([i,j])              
         move(space, [0,0], agente) 
 
-    except Exception as e:
-        print(e, "-> moveCmodelo")
+    # except Exception as e:
+    #     print(e, "-> moveCmodelo")
 
 # Funcao para verificar se ainda existe algum ponto a ser coletado
 def hasPoints(space):
@@ -39,10 +39,13 @@ def hasPoints(space):
     for i in range(len(space)):
         for j in range(len(space)):
             if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
-                # print("ainda tem ponto")
+
                 flagHasPoints = True
+                print(i,j, space[i][j])
                 return flagHasPoints
                 
+                
+    # print(space)
  
     # if (not flagHasPoints):
         # print("não temos mais itens a ser coletados. parece que o trabalho foi concluido. ")
@@ -77,7 +80,7 @@ def returnBase(agente):
     y = pos[1]
     while(y != 0):
         y -= 1 
-        print("andei p esquerda voltando p base")    
+        # print("andei p esquerda voltando p base")    
     while(x != 0):
         x -= 1
     agente.setPosition([x,y])
@@ -88,26 +91,31 @@ def returnBase(agente):
 # * A ideia da função é pegar o valor onde está o ponto, verificar se ele é azul ou vermelho
 # * e a partir disso, incrementar a quantidade de pontos coletados, transformar a posicao coletada em
 # * 'vazio' e além disso, atualizar o space e retornar o Agente para base.
-def collectPoint(positionPoint, collectedPoints, pointColor, agente): 
-    positionX = positionPoint[0]
-    positionY = positionPoint[1]
+def collectPoint(positionPoint, collectedPoints, pointColor, agente,space): 
+    x = positionPoint[0]
+    y = positionPoint[1]
     if (agente.getHasItem() == False) :
         if (pointColor == 'azul'): 
+            space[x][y] = 'vazio'
             agente.setCollectedPoints(agente.getCollectedPoints() + 10)
             agente.setHasItem(True)
+            printSpace(space)
             returnBase(agente)
             print("minha pontuacao atual é de: ", agente.getCollectedPoints())
             return True
         elif (pointColor == 'vermelho'): 
+            space[x][y] = 'vazio'
             agente.setCollectedPoints(agente.getCollectedPoints() + 20)
             agente.setHasItem(True)
+            printSpace(space)
             returnBase(agente)
             print("minha pontuacao atual é de: ", agente.getCollectedPoints())
             return True
     
-    printSpace(space)
+    # printSpace(space)
     if (isinstance(agenteCModelos, AgenteCModelos)):
         agente.setLastPosition(x,y)
+        print ("oi, sou o agente e coletei em ", agente.getLastPosition())
     print("minha pontuacao atual é de: ", agente.getCollectedPoints())
 
     # positionAgent = [0,0] #agente retornando para base 
@@ -130,17 +138,18 @@ def currentPosition(space):
 def move(space, nextPosition, agente):
     # agentPosition = currentPosition(space)
     agentPosition = agente.getPosition()
-    # print("current ", agentPosition)
+    print(agentPosition, "pos")
+    if (agentPosition[0] == 0 and agentPosition[1] == 19): returnBase(agente)
     x = agentPosition[0]
     y = agentPosition[1]
-    
+    print(agentPosition, "comecei na pos ")
     print(agente.getHasItem(), "ta como item?")
-    while (agente.getHasItem() == False and agente.getCollectedPoints() < 150 and hasPoints(space)):
+    while (hasPoints(space) and agente.collectedPoints < 150):
         for i in range(len(space)):
             for j in range(len(space)):
                 flag = hasPoints(space)
                 if (space[x][y]== 'vermelho' and not agente.getHasItem()):
-                    flagCollected = collectPoint([x,y], collectedPoints, 'vermelho', agente)
+                    flagCollected = collectPoint([x,y], collectedPoints, 'vermelho', agente, space)
                     # print('acabei de coletar um vermelho')
                     if (flagCollected): 
                         space[x][y] = 'vazio'
@@ -149,7 +158,7 @@ def move(space, nextPosition, agente):
                     returnBase(agente)
                     # space[x][y] = 'vazio'
                 elif (space[x][y] == 'azul' and not agente.getHasItem()):
-                    flagCollected = collectPoint([x,y], collectedPoints, 'azul', agente)
+                    flagCollected = collectPoint([x,y], collectedPoints, 'azul', agente, space)
                     # print('acabei de coletar um azul')
                     returnBase(agente)
                     if (flagCollected): space[x][y] = 'vazio'
@@ -169,18 +178,17 @@ def move(space, nextPosition, agente):
                     if (flag):                    
                         returnBase(agente)
                         break
-                if (x == 19 or x == 0 and 0<=y<19):
+                if (x == 19 or x == 0 and y<19):
                     y += 1
                     # print("andei p baixo")
                     if (flag):                    
                         returnBase(agente)
                         break
-                if (agente.getPosition()[0] == 0 and agente.getPosition()[1]):
+                if (agente.getPosition()[0] == 0 and agente.getPosition()[1]==19 and not hasPoints(space)):
                     returnBase(agente)
                     break
                 
                 flag = hasPoints(space)
-                currentPos = agente.getPosition()
                 if (flag):                    
                     returnBase(agente)
                     break
@@ -207,9 +215,11 @@ class Main:
 
     agenteCModelos.setMapa(space)
 
+
+    moveCModelo(space, agenteCModelos) 
     # move(space, [0,0], agenteSimples) # agente simples
     # print(agenteSimples.getCollectedPoints())
-    moveCModelo(space, agenteCModelos) # agente simples
+   
     # print((type(agenteCModelos)))
     # print(isinstance(agenteCModelos, AgenteCModelos))
     print("--- Tempo de execucao de: %s segundos ---" % (time.time() - start_time))
