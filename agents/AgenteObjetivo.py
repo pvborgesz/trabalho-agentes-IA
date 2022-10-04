@@ -70,7 +70,7 @@ class AgenteObjetivo(AgenteGenerico):
         posicaoPontos = []
         for i in range (len(space)):
             for j in range (len(space)):
-                if (space[i][j] == 'azul' or space[i][j] == 'vermelho'):
+                if (space[i][j] == 'B ' or space[i][j] == 'R '):
                     # posicaoPontos.append([i,j])
                     posicaoPontos.append([i,j, space[i][j]])
 
@@ -84,7 +84,7 @@ class AgenteObjetivo(AgenteGenerico):
         y = currentPosition[1]
 
         for i in range(len(posPoints)):
-            if posPoints[2] == 'vermelho':
+            if posPoints[2] == 'R ':
                 while (x != posPoints[0][0]):
                     x += 1
                     print('andei p direita')

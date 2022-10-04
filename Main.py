@@ -42,12 +42,11 @@ def hasPoints(space):
     for i in range(len(space)):
         for j in range(len(space)):
 
-            if (space[i][j] == 'vermelho' or space[i][j] == 'azul'):
+            if (space[i][j] == 'R ' or space[i][j] == 'B '):
                 flagHasPoints = True
                 # print(i,j, space[i][j])
                 break
     return flagHasPoints
-                
                 
     # print(space)
  
@@ -59,9 +58,9 @@ def hasPoints(space):
 def printSpace(space):
     for i in range (0,19):
         for j in range (0,19):
-            if (space[i][j] == 'vermelho'): 
+            if (space[i][j] == 'R '): 
                 print( "\033[1;31m"  + f"[{space[i][j]}]" , end="" + bcolors.RESET)
-            elif (space[i][j] == 'azul'): 
+            elif (space[i][j] == 'B '): 
                 print("\033[1;34m"+ f"[{space[i][j]}]" , end="" + bcolors.RESET)
             else:
                 print(f"[{space[i][j]}] ",end="")
@@ -71,11 +70,11 @@ def printSpace(space):
 #Função para verificar elemento da position atual
 def verifySpace(pos, space):
     if (space[pos[0]][pos[1]] == '_'):
-        return 'vazio'
-    elif (space[pos[0]][pos[1]] == 'vermelho'):
-        return 'vermelho'
-    elif (space[pos[0]][pos[1]] == 'azul'):
-        return 'azul'
+        return '0'
+    elif (space[pos[0]][pos[1]] == 'R '):
+        return 'R '
+    elif (space[pos[0]][pos[1]] == 'B '):
+        return 'B '
 
 #Retonar agente para [0,0]
 def returnBase(agente):
@@ -94,21 +93,21 @@ def returnBase(agente):
 #   ** Funcao de ação do agente para coletar e voltar para base
 # * A ideia da função é pegar o valor onde está o ponto, verificar se ele é azul ou vermelho
 # * e a partir disso, incrementar a quantidade de pontos coletados, transformar a posicao coletada em
-# * 'vazio' e além disso, atualizar o space e retornar o Agente para base.
+# * '0' e além disso, atualizar o space e retornar o Agente para base.
 def collectPoint(positionPoint, collectedPoints, pointColor, agente,space): 
     x = positionPoint[0]
     y = positionPoint[1]
     if (agente.getHasItem() == False) :
-        if (pointColor == 'azul'): 
-            space[x][y] = 'vazio'
+        if (pointColor == 'B '): 
+            space[x][y] = '0'
             agente.setCollectedPoints(agente.getCollectedPoints() + 10)
             agente.setHasItem(True)
             printSpace(space)
             returnBase(agente)
             print("minha pontuacao atual é de: ", agente.getCollectedPoints())
             return True
-        elif (pointColor == 'vermelho'): 
-            space[x][y] = 'vazio'
+        elif (pointColor == 'R '): 
+            space[x][y] = '0'
             agente.setCollectedPoints(agente.getCollectedPoints() + 20)
             agente.setHasItem(True)
             printSpace(space)
@@ -132,7 +131,7 @@ def currentPosition(space):
     y = 0
     for i in range (len(space)):
         for j in range (len(space)):
-            if space[i][j] == 'agente':
+            if space[i][j] == 'A ':
                 print(f"Oi, sou o Agente e estou na posição X={i} Y={j}.")
                 x = i
                 j = y
@@ -151,20 +150,20 @@ def move(space, nextPosition, agente):
         for i in range(len(space)):
             for j in range(len(space)):
                 flag = hasPoints(space)
-                if (space[x][y]== 'vermelho' and not agente.getHasItem()):
-                    flagCollected = collectPoint([x,y], collectedPoints, 'vermelho', agente, space)
+                if (space[x][y]== 'R ' and not agente.getHasItem()):
+                    flagCollected = collectPoint([x,y], collectedPoints, 'R ', agente, space)
                     # print('acabei de coletar um vermelho')
                     if (flagCollected): 
-                        space[x][y] = 'vazio'
+                        space[x][y] = '0'
                         print("coletei e deixei vazio")
                     printSpace(space)
                     returnBase(agente)
-                    # space[x][y] = 'vazio'
-                elif (space[x][y] == 'azul' and not agente.getHasItem()):
-                    flagCollected = collectPoint([x,y], collectedPoints, 'azul', agente, space)
+                    # space[x][y] = '0'
+                elif (space[x][y] == 'B ' and not agente.getHasItem()):
+                    flagCollected = collectPoint([x,y], collectedPoints, 'B ', agente, space)
                     # print('acabei de coletar um azul')
                     returnBase(agente)
-                    if (flagCollected): space[x][y] = 'vazio'
+                    if (flagCollected): space[x][y] = '0'
                 if (y % 2 == 0 and x < 19) : 
                     # print(f"Estou na posicao {x} {y} que é da cor: {space[x][y]} e estou com item? {agente.getHasItem()}")
                     x += 1 
@@ -196,7 +195,7 @@ def move(space, nextPosition, agente):
                     returnBase(agente)
                     break
                 agente.setPosition([x,y])
-                # space[x][y] = 'agente'
+                # space[x][y] = 'A '
         agente.setPosition([x,y])
     return space
 

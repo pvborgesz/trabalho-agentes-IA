@@ -3,6 +3,8 @@ acoes = []
 percepcoes = []
 localizacao = []
 
+import numpy as np
+
 # AgenteGenerico = AgenteGenerico.AgenteGenerico(acoes, percepcoes, localizacao)
 
 class AgenteUtilidade(AgenteGenerico):
@@ -70,12 +72,17 @@ class AgenteUtilidade(AgenteGenerico):
         posicaoPontos = []
         for i in range (len(space)):
             for j in range (len(space)):
-                if (space[i][j] == 'azul' or space[i][j] == 'vermelho'):
+                if (space[i][j] == 'B ' or space[i][j] == 'R '):
                     # posicaoPontos.append([i,j])
                     posicaoPontos.append([i,j, space[i][j]])
 
+        print(posicaoPontos)
+        a = np.array(posicaoPontos)
+        a.sort(axis=1)
+        print(a)
+
         # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
-        return posicaoPontos           
+        return a         
 
     def gotoPoint(self, posPoints, space, agente):
         currentPosition = agente.getPosition()
@@ -87,12 +94,12 @@ class AgenteUtilidade(AgenteGenerico):
             while (x != posPoints[0][0]):
                 x += 1
                 # print('andei p direita')
-                if (space[x][y] == 'vermelho' or space[x][y] == 'azul '):
+                if (space[x][y] == 'R ' or space[x][y] == 'azul '):
                     collectPoint([x,y], space[x][y], agente,space)
             while (y != posPoints[0][1]):
                 y += 1
                 # print('andei p baixo')
-                if (space[x][y] == 'vermelho' or space[x][y] == 'azul '):
+                if (space[x][y] == 'R ' or space[x][y] == 'azul '):
                     collectPoint([x,y], space[x][y], agente,space)
 
         posPoints.pop(0)       
@@ -105,16 +112,16 @@ class AgenteUtilidade(AgenteGenerico):
         x = positionPoint[0]
         y = positionPoint[1]
         if (agente.getHasItem() == False) :
-            if (pointColor == 'azul'): 
-                space[x][y] = 'vazio'
+            if (pointColor == 'B '): 
+                space[x][y] = '0'
                 agente.setCollectedPoints(agente.getCollectedPoints() + 10)
                 agente.setHasItem(True)
                 printSpace(space)
                 returnBase(agente)
                 print("minha pontuacao atual é de: ", agente.getCollectedPoints())
                 return True
-            elif (pointColor == 'vermelho'): 
-                space[x][y] = 'vazio'
+            elif (pointColor == 'R '): 
+                space[x][y] = '0'
                 agente.setCollectedPoints(agente.getCollectedPoints() + 20)
                 agente.setHasItem(True)
                 printSpace(space)

@@ -16,7 +16,7 @@ def geradorPontos():
 
   
     # print(len(space))
-    # space[0][0] = 'agente'
+    # space[0][0] = 'A '
     # while cont < 10 and qtdAzul< 5 and qtdVermelho<5:
     while qtdAzul< 5 or qtdVermelho<5:
         random_c = randint(1, 18) 
@@ -34,13 +34,13 @@ def geradorPontos():
 
             random_value = sample(set([1, 2]), 1)  
 
-            if (random_value[0] == 1 and qtdAzul< 5 and space[random_c][random_l] != 'vermelho'): 
-                random_value = space[random_c][random_l] = 'azul'
+            if (random_value[0] == 1 and qtdAzul< 5 and space[random_c][random_l] != 'R '): 
+                random_value = space[random_c][random_l] = 'B '
                 qtdAzul += 1  
                 # print("Coloquei mais um azul na posicao {} {}, no total tem {} azul".format(random_c,random_l,qtdAzul))    
             
-            elif (qtdVermelho< 5 and space[random_c][random_l] != 'azul'):
-                space[random_c][random_l] = 'vermelho' 
+            elif (qtdVermelho< 5 and space[random_c][random_l] != 'B '):
+                space[random_c][random_l] = 'R ' 
                 qtdVermelho += 1
                 # print("Coloquei mais um vermelho na posicao {} {}, no total tem {} vermelho".format(random_c,random_l,qtdVermelho))
         
