@@ -76,7 +76,13 @@ class AgenteUtilidade(AgenteGenerico):
                     # posicaoPontos.append([i,j])
                     posicaoPontos.append([i,j, space[i][j]])
 
-        print(posicaoPontos)
+        # for i in range (len(posicaoPontos)):
+        #     soma = posicaoPontos[i][0] + posicaoPontos[i][1]            
+        #     if int(soma) > valueAux:
+        #         aux = posicaoPontos[0] + posicaoPontos[1]
+        #         vetorAux.append(posicaoPontos[i])
+        #         print("adicionei", posicaoPontos[i])
+
         # print("Encontrei pontos nos locais: ", posicaoPontos, "total de pontos: ", len(posicaoPontos))
         return posicaoPontos        
 

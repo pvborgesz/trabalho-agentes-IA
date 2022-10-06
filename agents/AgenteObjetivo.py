@@ -5,6 +5,18 @@ localizacao = []
 
 # AgenteGenerico = AgenteGenerico.AgenteGenerico(acoes, percepcoes, localizacao)
 
+# def returnBestArray(n)):
+#     bestArray = []
+#     for i in range(n):
+#         if (n[2] == 'vermelho'):
+#             bestArray.append(i)
+#     for i in range(len(n)):
+#         if (i not in bestArray):
+#             bestArray.append(i)
+#     print(bestArray)
+#     return bestArray
+
+
 class AgenteObjetivo(AgenteGenerico):
     def __init__(self, acoes, percepcoes, localizacao,collectedPoints):
         # super().__init__()
